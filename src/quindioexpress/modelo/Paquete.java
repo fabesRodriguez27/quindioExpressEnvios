@@ -1,7 +1,6 @@
 package quindioexpress.modelo;
-
 import java.util.Objects;
-
+import java.util.Random;
 
 public class Paquete implements Comparable<Paquete> {
 
@@ -16,14 +15,36 @@ public class Paquete implements Comparable<Paquete> {
     private final int tiempoEstimado;
 
 
-    public Paquete(String codigo, String destino, double peso, int prioridad, int tiempoEstimado) {
-        this.codigo = codigo;
+    public Paquete(String destino, double peso, int prioridad, int tiempoEstimado) {
+        if (destino == null || destino.trim().isEmpty()) {
+            throw new IllegalArgumentException("El destino es obligatorio");
+        }
+        if (peso <= 0) {
+            throw new IllegalArgumentException("El peso debe ser positivo");
+        }
+        if (prioridad < 1 || prioridad > 10) {
+            throw new IllegalArgumentException("La prioridad debe estar entre 1 y 10");
+        }
+        if (tiempoEstimado <= 0) {
+            throw new IllegalArgumentException("El tiempo debe ser positivo");
+        }
+        this.codigo = generarCodigo();
         this.destino = destino;
         this.peso = peso;
-        this.prioridad = PRIORIDAD_DEFECTO;
+        this.prioridad = prioridad;
         this.tiempoEstimado = tiempoEstimado;
     }
 
+    //Constructor con Prioridad Por Defecto
+    public Paquete(String destino, double peso, int tiempoEstimado) {
+        this(destino, peso, PRIORIDAD_MIN, tiempoEstimado);
+    }
+
+    public static String generarCodigo() {
+        Random random = new Random();
+        int numero = random.nextInt(1000000);
+        return String.format("PQ%06d", numero);
+    }
 
     public String getCodigo() {
         return codigo;
@@ -51,6 +72,15 @@ public class Paquete implements Comparable<Paquete> {
         return this.codigo.compareTo(otro.codigo);
     }
 
+    @Override
+    public String toString() {
+        return "Código Paquete : " + codigo + "\n" +
+                "Destino : " + destino + "\n" +
+                "Peso: " + peso + "\n" +
+                "Prioridad: " + prioridad + "\n" +
+                "Tiempo Estimado: " + tiempoEstimado;
+    }
+
     // Dos paquetes son iguales si tienen el mismo código
     @Override
     public boolean equals(Object o) {
@@ -65,9 +95,5 @@ public class Paquete implements Comparable<Paquete> {
         return Objects.hash(codigo);
     }
 
-    @Override
-    public String toString() {
-        return codigo + " | " + destino + " | " + peso + " kg | prioridad " + prioridad
-                + " | " + tiempoEstimado + " min";
-    }
+
 }
