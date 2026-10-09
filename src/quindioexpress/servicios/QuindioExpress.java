@@ -38,9 +38,20 @@ public class QuindioExpress {
         return true;
     }
 
-    //Consultar Paquete
-    public Paquete consultarPaquete(String codigo){
+    //Buscar Paquete
+    public Paquete buscarPaquete(String codigo){
         return paquetesPorCodigo.get(codigo);
+    }
+
+    public boolean eliminarPaquete(String codigo){
+        Paquete paqueteHallado = buscarPaquete(codigo);
+        if(paqueteHallado != null){
+            paquetesRegistrados.remove(paqueteHallado);
+            paquetesPorCodigo.remove(paqueteHallado.getCodigo());
+            prioridades.remove(paqueteHallado);
+            return true;
+        }
+        return false;
     }
 
     //Mostrar Paquetes Registrados
