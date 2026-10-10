@@ -132,4 +132,20 @@ public class QuindioExpress {
         return copia;
     }
 
+    // REPARTIDORES
+
+    // Registrar repartidor
+    public boolean registrarRepartidor(Repartidor repartidor){
+        if(repartidores.containsKey(repartidor.getId())){
+            return false;
+        }
+        repartidores.put(repartidor.getId(), repartidor);
+        return true;
+    }
+
+    // Consultar repartidor
+    public Repartidor consultarRepartidor(String id) {
+        return repartidores.get(id);
+    }
+
 }
