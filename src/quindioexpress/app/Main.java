@@ -1,17 +1,10 @@
 package quindioexpress.app;
 
-import quindioexpress.modelo.Paquete;
+import quindioexpress.servicios.QuindioExpress;
 
 public class Main {
-
-    /*
-● 30 paquetes;
-● al menos 5 destinos diferentes;
-● al menos 6 repartidores;
-● paquetes con diferentes prioridades;
-● paquetes con diferentes pesos;
-● códigos no consecutivos;
-● varios paquetes destinados al mismo municipio.
-    * */
-
+    public static void main(String[] args) {
+        QuindioExpress centro = new QuindioExpress();
+        DatosIniciales.cargar(centro);
+    }
 }
