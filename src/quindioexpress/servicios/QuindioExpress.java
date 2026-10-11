@@ -1,4 +1,7 @@
 package quindioexpress.servicios;
+import quindioexpress.algoritmos.AlgoritmosRecursivos;
+import quindioexpress.algoritmos.BusquedaBinaria;
+import quindioexpress.algoritmos.DivideYVenceras;
 import quindioexpress.comparadores.ComparadorPaqueteCondicional;
 import quindioexpress.comparadores.ComparadorPesoPaquete;
 import quindioexpress.comparadores.ComparadorTiempoEstimado;
@@ -147,5 +150,27 @@ public class QuindioExpress {
     public Repartidor consultarRepartidor(String id) {
         return repartidores.get(id);
     }
+
+    // Peso total de un determinado municipio
+    public double pesoTotalMunicipio(String municipio){
+        return AlgoritmosRecursivos.pesoTotalPorMunicipio(paquetesRegistrados, municipio);
+    }
+
+    // Paquete de mayor peso
+    public Paquete paqueteConMayorPeso(){
+        return DivideYVenceras.paqueteMayorPeso(paquetesRegistrados);
+    }
+
+    // cantidad de paquetes con minima prioridad
+    public int contarPrioridadMin(int prioridadMinima){
+        return AlgoritmosRecursivos.contarPrioridadMinima(paquetesRegistrados, prioridadMinima);
+    }
+
+    // Localizar paquete por busqueda Binaria
+    public Paquete buscaPaquetePorBinaria(String codigo){
+        return BusquedaBinaria.buscarPaquete(paquetesRegistrados, codigo);
+    }
+
+
 
 }
