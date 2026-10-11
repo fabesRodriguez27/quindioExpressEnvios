@@ -15,7 +15,10 @@ public class DatosIniciales {
 
     public static void cargar(QuindioExpress centro) {
         cargarPaquetes(centro);
+        /*
         cargarRepartidores(centro);
+
+         */
     }
 
     private static void cargarPaquetes(QuindioExpress center) {
@@ -52,6 +55,7 @@ public class DatosIniciales {
         registrar(center, "PQ420", "Calarcá",     6.4, 3, 30);
     }
 
+    /*
     private static void cargarRepartidores(QuindioExpress center) {
         center.registrarRepartidor(new Repartidor("R001", "Carlos Gómez",    "Armenia"));
         center.registrarRepartidor(new Repartidor("R002", "Laura Ramírez",   "Armenia"));
@@ -66,7 +70,9 @@ public class DatosIniciales {
         center.registrarRepartidor(marta);
     }
 
+     */
+
     private static void registrar(QuindioExpress center, String codigo, String destino, double peso, int prioridad, int tiempo) {
-        center.registrarPaquete(new Paquete(destino, peso, prioridad, tiempo));
+        center.agregarPaquete(new Paquete(destino, peso, prioridad, tiempo));
     }
 }

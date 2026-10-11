@@ -1,7 +1,5 @@
 package quindioexpress.comparadores;
-
 import quindioexpress.modelo.Paquete;
-
 import java.util.Comparator;
 
 public class ComparadorTiempoEstimado implements Comparator<Paquete> {

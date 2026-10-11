@@ -78,7 +78,7 @@ public class Paquete implements Comparable<Paquete> {
                 "Destino : " + destino + "\n" +
                 "Peso: " + peso + "\n" +
                 "Prioridad: " + prioridad + "\n" +
-                "Tiempo Estimado: " + tiempoEstimado;
+                "Tiempo Estimado: " + tiempoEstimado + "\n";
     }
 
     // Dos paquetes son iguales si tienen el mismo código

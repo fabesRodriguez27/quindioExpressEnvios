@@ -22,7 +22,7 @@ public class DatosPrueba {
             Paquete paquete = new Paquete(destino, peso, prioridad, tiempoEstimado);
 
             //Si el código está repetido, generamos otro paquete.
-            while (!centro.registrarPaquete(paquete)) {
+            while (!centro.agregarPaquete(paquete)) {
                 paquete = new Paquete(destino, peso, prioridad, tiempoEstimado);
             }
             // Guardamos el código real del paquete registrado.
