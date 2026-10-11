@@ -37,7 +37,7 @@ public class Paquete implements Comparable<Paquete> {
 
     //Constructor con Prioridad Por Defecto
     public Paquete(String destino, double peso, int tiempoEstimado) {
-        this(destino, peso, PRIORIDAD_MIN, tiempoEstimado);
+        this(destino, peso, PRIORIDAD_DEFECTO, tiempoEstimado);
     }
 
     public static String generarCodigo() {

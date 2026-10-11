@@ -17,12 +17,11 @@ public class BusquedaBinaria {
         return null;
     }
 
-    // metodo auxiliar
+    //Método auxiliar
     public static Paquete buscar(List<Paquete> lista, String codigo, int inicio, int fin) {
         if (inicio > fin) {
             return null;                                   // caso base: no existe
         }
-
         int medio = (inicio + fin) / 2;
         String codigoDelMedio = lista.get(medio).getCodigo();
         int comparacion = codigo.compareTo(codigoDelMedio);
@@ -35,5 +34,4 @@ public class BusquedaBinaria {
         }
         return buscar(lista, codigo, inicio, medio - 1); // va antes, sigo con la izquierda
     }
-
 }

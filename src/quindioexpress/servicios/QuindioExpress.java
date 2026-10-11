@@ -46,6 +46,16 @@ public class QuindioExpress {
         return paquetesPorCodigo.get(codigo);
     }
 
+    //Buscar Paquete ArrayList (Para la Prueba)
+    public Paquete buscarPaqueteArrayList(String codigo){
+        for(Paquete paquete : paquetesRegistrados) {
+            if(paquete.getCodigo().equals(codigo)) {
+                return paquete;
+            }
+        }
+        return null;
+    }
+
     public boolean eliminarPaquete(String codigo){
         Paquete paqueteHallado = buscarPaquete(codigo);
         if(paqueteHallado != null){
@@ -91,6 +101,15 @@ public class QuindioExpress {
     //Municipios que Tienen Paquetes Registrados y Ordenado Alfabéticamente
     public Set<String> obtenerMunicipiosSinDuplicadosOrdenados(){
         TreeSet<String> municipios = new TreeSet<>();
+        for (Paquete paquete : paquetesRegistrados) {
+            municipios.add(paquete.getDestino());
+        }
+        return municipios;
+    }
+
+    //Municipios que Tienen Paquetes Registrados y sin orden alfabético
+    public Set<String> obtenerMunicipiosSinDuplicados(){
+        HashSet<String> municipios = new HashSet<>();
         for (Paquete paquete : paquetesRegistrados) {
             municipios.add(paquete.getDestino());
         }
@@ -151,26 +170,24 @@ public class QuindioExpress {
         return repartidores.get(id);
     }
 
-    // Peso total de un determinado municipio
+    //Peso total de un determinado municipio
     public double pesoTotalMunicipio(String municipio){
         return AlgoritmosRecursivos.pesoTotalPorMunicipio(paquetesRegistrados, municipio);
     }
 
-    // Paquete de mayor peso
+    //Paquete de mayor peso
     public Paquete paqueteConMayorPeso(){
         return DivideYVenceras.paqueteMayorPeso(paquetesRegistrados);
     }
 
-    // cantidad de paquetes con minima prioridad
+    //cantidad de paquetes con minima prioridad
     public int contarPrioridadMin(int prioridadMinima){
         return AlgoritmosRecursivos.contarPrioridadMinima(paquetesRegistrados, prioridadMinima);
     }
 
-    // Localizar paquete por busqueda Binaria
+    //Localizar paquete por Búsqueda Binaria
     public Paquete buscaPaquetePorBinaria(String codigo){
         return BusquedaBinaria.buscarPaquete(paquetesRegistrados, codigo);
     }
-
-
 
 }
