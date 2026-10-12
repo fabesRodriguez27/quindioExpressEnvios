@@ -13,6 +13,7 @@ public class Paquete implements Comparable<Paquete> {
     private final double peso;
     private final int prioridad;
     private final int tiempoEstimado;
+    private String idRepartidor;
 
 
     public Paquete(String destino, double peso, int prioridad, int tiempoEstimado) {
@@ -33,6 +34,7 @@ public class Paquete implements Comparable<Paquete> {
         this.peso = peso;
         this.prioridad = prioridad;
         this.tiempoEstimado = tiempoEstimado;
+        this.idRepartidor = null;
     }
 
     //Constructor con Prioridad Por Defecto
@@ -64,6 +66,14 @@ public class Paquete implements Comparable<Paquete> {
 
     public int getTiempoEstimado() {
         return tiempoEstimado;
+    }
+
+    public String idRepartidor() {
+        return idRepartidor;
+    }
+
+    public void setIdRepartidor(String idRepartidor) {
+        this.idRepartidor=idRepartidor;
     }
 
     // Orden natural, por código ascendente
