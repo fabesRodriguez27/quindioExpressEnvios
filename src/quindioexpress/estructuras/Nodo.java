@@ -1,11 +1,26 @@
 package quindioexpress.estructuras;
 
-// sin public para que solo pueda ser accesible desde el mismo package de estructuras
-class Nodo<T> {
-    T valor;
-    Nodo<T> siguiente;
+public class Nodo <T> {
+    private T dato;
+    private Nodo <T> siguiente;
 
-    Nodo(T valor) {
-        this.valor = valor;
+    public Nodo(T dato) {
+        this.dato = dato;
+    }
+
+    public T getDato() {
+        return dato;
+    }
+
+    public void setDato(T dato) {
+        this.dato = dato;
+    }
+
+    public Nodo <T> getSiguiente() {
+        return siguiente;
+    }
+
+    public void setSiguiente(Nodo <T> siguiente) {
+        this.siguiente = siguiente;
     }
 }

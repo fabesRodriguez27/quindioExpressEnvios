@@ -122,15 +122,26 @@ public class GestionPaquetes {
 
     // Obtener el primer paquete registrado
     public Paquete obtenerPaquetePorOrdenLlegada() {
-        if (paquetesRegistrados.isEmpty()) {
-            return null;
+        for (Paquete paquete : paquetesRegistrados) {
+
+            if (paquete.idRepartidor() == null) {
+                return paquete;
+            }
         }
-        return paquetesRegistrados.get(0);
+        return null;
     }
 
     // Consultar el paquete de mayor prioridad
     public Paquete obtenerPaquetePorPrioridad() {
-        return prioridades.peek();
+        PriorityQueue<Paquete> copia = new PriorityQueue<>(prioridades);
+
+        while (!copia.isEmpty()) {
+            Paquete paquete = copia.poll();
+            if (paquete.idRepartidor() == null) {
+                return paquete;
+            }
+        }
+        return null;
     }
 
     // ---------- REPORTES ----------
@@ -188,5 +199,4 @@ public class GestionPaquetes {
     public Paquete buscaPaquetePorBinaria(String codigo){
         return BusquedaBinaria.buscarPaquete(paquetesRegistrados, codigo);
     }
-
 }

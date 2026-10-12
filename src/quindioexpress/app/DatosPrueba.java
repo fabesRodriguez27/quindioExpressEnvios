@@ -1,12 +1,12 @@
 package quindioexpress.app;
 import quindioexpress.modelo.Paquete;
-import quindioexpress.servicios.QuindioExpress;
+import quindioexpress.servicios.CentroLogistico;
 
 import java.util.Random;
 
 public class DatosPrueba {
 
-    public static String crearPaquetes(QuindioExpress centro, int cantidad) {
+    public static String crearPaquetes(CentroLogistico centro, int cantidad) {
 
         Random random = new Random();
         String codigoUltimo = null;
@@ -32,7 +32,7 @@ public class DatosPrueba {
         return codigoUltimo;
     }
 
-    public static void probarBusqueda(QuindioExpress centro, int cantidad) {
+    public static void probarBusqueda(CentroLogistico centro, int cantidad) {
 
         // 1. Crear todos los paquetes.
         // Este tiempo no se incluye en las mediciones porque quiero medir es solo buscar

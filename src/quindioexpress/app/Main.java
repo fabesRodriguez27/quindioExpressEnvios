@@ -1,11 +1,11 @@
 package quindioexpress.app;
 import quindioexpress.modelo.Paquete;
-import quindioexpress.servicios.QuindioExpress;
+import quindioexpress.servicios.CentroLogistico;
 
 import javax.swing.*;
 
 public class Main {
-    public static QuindioExpress quindioExpress = new QuindioExpress();
+    public static CentroLogistico quindioExpress = new CentroLogistico();
 
     public static void main(String[] args) {
         /*
@@ -15,43 +15,56 @@ public class Main {
         menuGestionarQuindioExpress();
     }
 
+    /*
+    ==================================
+    MENU PRINCIPAL
+    ==================================
+     */
+
     public static void menuGestionarQuindioExpress() {
         int opcion;
         do {
             String mensaje = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
                     + "1. Gestionar Paquetes\n"
                     + "2. Gestionar Repartidores\n"
-                    + "3. Reportes QuindíoExpress\n"
-                    + "4. Salir del Programa\n";
+                    + "3. Gestionar Entregas\n"
+                    + "4. Reportes QuindíoExpress\n"
+                    + "5. Salir del Programa\n";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             validarMenuGestionarQuindioExpress(opcion);
-        } while(opcion!=4);
+        } while (opcion != 5);
     }
 
-    public static void validarMenuGestionarQuindioExpress(int opcion){
-       switch (opcion){
-           case 1:
-               menuGestionarPaquetes();
-               break;
-           /*
-           case 2:
-               menuGestionarRepartidores();
-               break;
+    public static void validarMenuGestionarQuindioExpress(int opcion) {
+        switch (opcion) {
+            case 1:
+                menuGestionarPaquetes();
+                break;
+            case 2:
+                menuGestionarRepartidores();
+                break;
+            case 3:
+                menuHistorialEntregas();
+                break;
+            case 4:
+                menuReportes();
+                break;
 
-           case 3:
-               menuReportesQuindioExpress();
-               break;
-            */
+            case 5:
+                mostrarMensaje(".....Saliendo del Programa....");
+                break;
 
-           case 4:
-               JOptionPane.showMessageDialog(null, ".....Saliendo del Programa....");
-               break;
-
-           default:
-               System.out.println("Opción no válida. Intente Nuevamente");
-               break;
-       }
+            default:
+                System.out.println("Opción no válida. Intente Nuevamente");
+                break;
+        }
     }
+
+    /*
+    ==================================
+    MENU GESTIONAR PAQUETES
+    ==================================
+     */
 
     public static void menuGestionarPaquetes() {
         int opcion;
@@ -65,11 +78,11 @@ public class Main {
                     + "6. Regresar al Menú Principal";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             validarMenuGestionarPaquetes(opcion);
-        } while(opcion!=6);
+        } while (opcion != 6);
     }
 
-    public static void validarMenuGestionarPaquetes(int opcion){
-        switch (opcion){
+    public static void validarMenuGestionarPaquetes(int opcion) {
+        switch (opcion) {
             case 1:
                 agregarPaquete();
                 break;
@@ -93,24 +106,24 @@ public class Main {
         }
     }
 
-    public static void agregarPaquete(){
+    public static void agregarPaquete() {
         String destino = JOptionPane.showInputDialog("Ingrese el Destino del Paquete: ");
         double peso = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el Peso del Paquete: "));
         int prioridad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Prioridad del Paquete: "));
         int tiempoEstimado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Tiempo Estimado del Paquete: "));
         Paquete paquete = new Paquete(destino, peso, prioridad, tiempoEstimado);
-        if(quindioExpress.agregarPaquete(paquete)){
+        if (quindioExpress.agregarPaquete(paquete)) {
             JOptionPane.showMessageDialog(null, "Paquete Registrado con Éxito");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se Pudo Registrar el Paquete");
         }
     }
 
-    public static void eliminarPaquete(){
+    public static void eliminarPaquete() {
         String codigo = JOptionPane.showInputDialog("Ingrese el Código del Paquete a Eliminar: ");
-        if(quindioExpress.eliminarPaquete(codigo)){
+        if (quindioExpress.eliminarPaquete(codigo)) {
             JOptionPane.showMessageDialog(null, "Paquete Eliminado con Éxito");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se Pudo Eliminar el Paquete. El Código No Existe");
         }
     }
@@ -118,14 +131,14 @@ public class Main {
     public static void buscarPaquetePorCodigo() {
         String codigo = JOptionPane.showInputDialog("Ingrese el Código del Paquete a Buscar: ");
         Paquete paquete = quindioExpress.buscarPaquete(codigo);
-        if(paquete!= null){
+        if (paquete != null) {
             System.out.println("El Paquete es: " + paquete.toString());
-        }else{
+        } else {
             System.out.println("No se Pudo Encontrar el Paquete");
         }
     }
 
-    public static void menuMostrarPaquetes(){
+    public static void menuMostrarPaquetes() {
         int opcion;
         do {
             String mensaje = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
@@ -136,11 +149,11 @@ public class Main {
                     + "5. Regresar";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             validarMenuMostrarPaquetes(opcion);
-        } while(opcion!=5);
+        } while (opcion != 5);
     }
 
-    public static void validarMenuMostrarPaquetes(int opcion){
-        switch (opcion){
+    public static void validarMenuMostrarPaquetes(int opcion) {
+        switch (opcion) {
             case 1:
                 mostrarPaquetesOrdenAlfabetico();
                 break;
@@ -161,27 +174,27 @@ public class Main {
         }
     }
 
-    public static void mostrarPaquetesOrdenAlfabetico(){
+    public static void mostrarPaquetesOrdenAlfabetico() {
         System.out.println("===== Paquetes Ordenados Alfabéticamente ====\n");
         quindioExpress.ordenarPaquetesAlfabeticamente();
     }
 
-    public static void mostrarPaquetePorPrioridad(){
+    public static void mostrarPaquetePorPrioridad() {
         System.out.println("===== Paquetes Ordenados Por Prioridad ====\n");
         quindioExpress.mostrarPaquetesPrioridad();
     }
 
-    public static void mostrarPaquetesPorPeso(){
+    public static void mostrarPaquetesPorPeso() {
         System.out.println("===== Paquetes Ordenados de Mayor a Menor Peso ====\n");
         quindioExpress.mostrarPaquetesPorPeso();
     }
 
-    public static void mostrarPaquetesPorTiempoEstimado(){
+    public static void mostrarPaquetesPorTiempoEstimado() {
         System.out.println("===== Paquetes Ordenados de Menor a Mayor Tiempo Estimado ====\n");
         quindioExpress.mostrarPaquetesPorTiempoEstimado();
     }
 
-    public static void menuProcesarPaquetes(){
+    public static void menuProcesarPaquetes() {
         int opcion;
         do {
             String mensaje = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
@@ -190,16 +203,26 @@ public class Main {
                     + "3. Regresar";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             validarMenuProcesarPaquetes(opcion);
-        } while(opcion!=3);
+        } while (opcion != 3);
     }
 
-    public static void validarMenuProcesarPaquetes(int opcion){
-        switch (opcion){
+    public static void validarMenuProcesarPaquetes(int opcion) {
+        switch (opcion) {
             case 1:
-                procesarPaqueteOrdenRegistro();
+                String mensaje1 = quindioExpress.procesarPaquetePorPrioridad();
+                if (mensaje1 != null) {
+                    mostrarMensaje("Se proceso el paquete: \n"+mensaje1);
+                }else {
+                    mostrarMensaje("No se encontró ningun paquete en la posición especificada");
+                }
                 break;
             case 2:
-                procesarPaquetePorPrioridad();
+                String mensaje2 = quindioExpress.procesarPaquetePorPrioridad();
+                if (mensaje2 != null) {
+                    mostrarMensaje("Se proceso el paquete: \n"+mensaje2);
+                }else {
+                    mostrarMensaje("No se encontró ningun paquete en la posición especificada");
+                }
                 break;
             case 3:
                 break;
@@ -209,13 +232,196 @@ public class Main {
         }
     }
 
-    private static void procesarPaqueteOrdenRegistro() {
-        quindioExpress.procesarPaqueteOrdenRegistro();
+
+    /*
+    ==================================
+    MENU GESTIONAR REPARTIDORES
+    ==================================
+     */
+
+    public static void menuGestionarRepartidores() {
+        String menu = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
+                + "(1) Agregar Repartidor:\n"
+                + "(2) Eliminar Repartidor:\n"
+                + "(3) Mostrar Repartidores:\n"
+                + "(4) Enviar a RUTA repartidor: \n"
+                + "(5) Volver al Menú Principal:\n";
+        int opcion;
+        do {
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            validarMenuGestionarRepartidores(opcion);
+        } while (opcion != 5);
     }
 
-    private static void procesarPaquetePorPrioridad() {
-        quindioExpress.procesarPaquetePorPrioridad();
+    public static void validarMenuGestionarRepartidores(int opcion) {
+        switch (opcion) {
+
+            case 1:
+                //(1) Agregar Entregas de Repartidor
+                boolean canCrear = quindioExpress.crearRepartidor(
+                        capturarDato("Ingrese el nombre del Repartidor: "),
+                        capturarDato("Ingrese la zona: "));
+                mostrarMensaje(canCrear ? "Se creó el repartidor" : "No se pudo crear el repartidor");
+                break;
+
+            case 2:
+                //(2) Eliminar Repartidor
+                boolean canEliminar = quindioExpress.eliminarRepartidor(
+                        capturarDato("Ingrese el id del repartidor que desea eliminar: "));
+                mostrarMensaje(canEliminar ? "Se eliminó el repartidor" : "No se pudo eliminar el repartidor");
+                break;
+
+            case 3:
+                //(3) Mostrar Repartidores
+                mostrarMensaje(quindioExpress.mostrarRepartidores());
+                break;
+
+            case 4:
+                //(4) Mandar a ruta repartidor
+                boolean canEnviar = quindioExpress.enviarRuta(
+                        capturarDato("Ingrese el código del repartidor que sale a ruta"));
+                mostrarMensaje(canEnviar ? "Se envió a ruta" : "El repartidor no tiene paquetes asignados");
+                break;
+
+            case 5:
+                break;
+
+            default:
+                mostrarMensaje("No ingresó ninguna opción válida");
+                break;
+        }
     }
 
 
+    /*
+    ==================================
+    MENU HISTORIAL DE ENTREGAS
+    ==================================
+     */
+
+    public static void menuHistorialEntregas() {
+        String menu = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
+                + "(1) Agregar Paquete entregado:\n"
+                + "(2) Eliminar Paquete por posición:\n"
+                + "(3) Obtener Paquete en posición específica: \n"
+                + "(4) Mostrar historial entregas:\n"
+                + "(5) Cantidad de paquetes Entregados:\n"
+                + "(6) Volver al Menú Anterior:\n";
+        int opcion;
+        do {
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(menu));
+            validarMenuHistorialEntregas(opcion);
+        } while (opcion != 6);
+    }
+
+    public static void validarMenuHistorialEntregas(int opcion) {
+        switch (opcion) {
+
+            case 1:
+                //(1) Agregar Paquete Entregado
+                boolean canAgregar = quindioExpress.agregarEntrega(
+                        capturarDato("Ingrese el código del paquete entregado: "));
+                mostrarMensaje(canAgregar ? "Se agregó la entrega al historial" : "No se pudo agregar la entrega al historial");
+                break;
+
+            case 2:
+                //(2) Eliminar Paquete por posición
+                boolean canEliminar = quindioExpress.eliminarEntrega(
+                        Integer.parseInt(capturarDato("Ingrese la posición de la entrega que desea eliminar: ")));
+                mostrarMensaje(canEliminar ? "Se eliminó la entrega" : "No se pudo eliminar la entrega");
+                break;
+
+            case 3:
+                //((3) Obtener Paquete en posición específica
+                String mensaje = quindioExpress.obtenerEntrega(
+                        Integer.parseInt(capturarDato("Ingrese la posición de la entrega que desea obtener: ")));
+                if (mensaje == null) {
+                    mostrarMensaje("No se encontró ningun paquete en la posición especificada");
+                }else {
+                    mostrarMensaje(mensaje);
+                }
+
+                break;
+
+            case 4:
+                //(4) Mostrar historial entregas
+                quindioExpress.mostrarHistorialEntregas();
+                break;
+
+            case 5:
+                //(5) Cantidad de paquetes Entregados
+                mostrarMensaje(quindioExpress.paquetesEntregados());
+                break;
+
+            case 6:
+                break;
+
+            default:
+                mostrarMensaje("No ingresó ninguna opción válida");
+                break;
+        }
+    }
+
+
+
+     /*
+    ==================================
+    MENU REPORTES QUINDIO EXPRESS
+    ==================================
+     */
+
+
+    public static void menuReportes() {
+        int opcion;
+        do {
+            String mensaje = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
+                    + "(1) Municipios con al menos un paquete\n"
+                    + "(2) Paquetes por municipio\n"
+                    + "(3) Peso de paquetes pendientes por zona\n"
+                    + "(4) Numero de paquetes mayor a prioridad indicada\n"
+                    + "(5) Paquete con mayor peso\n"
+                    + "(6) Regresar a menu principal \n";
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
+            validarMenuReportes(opcion);
+        } while (opcion != 6);
+    }
+
+    public static void validarMenuReportes(int opcion) {
+        switch (opcion) {
+            case 1:
+                //(1) Municipios con al menos un paquete
+                //mostrarMensaje(quindioExpress.municipiosConPaquetes());
+                break;
+            case 2:
+                //(2) Paquetes por municipio
+                //mostrarMensaje(quindioExpress.paquetesPorMunicipio());
+                break;
+            case 3:
+                //(3) Peso de paquetes pendientes por zona
+                //mostrarMensaje(quindioExpress.pesoPaquetesPorZona());
+                break;
+            case 4:
+                //(4) Numero de paquetes mayor a prioridad indicada
+                //mostrarMensaje(quindioExpress.paquetesMayorAPrioridad(
+                //        Integer.parseInt(capturarDato("Ingrese la prioridad que desea verificar: "));
+                break;
+            case 5:
+                //(5) Paquete con mayor peso
+                //mostrarMensaje(quindioExpress.paquetePesoMayor());
+                break;
+            case 6:
+                break;
+            default:
+                System.out.println("Opción no válida. Intente Nuevamente");
+                break;
+        }
+    }
+
+    public static void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(null, mensaje);
+    }
+
+    public static String capturarDato(String mensaje) {
+        return JOptionPane.showInputDialog(mensaje);
+    }
 }

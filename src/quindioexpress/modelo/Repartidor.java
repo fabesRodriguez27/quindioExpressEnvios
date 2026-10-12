@@ -1,6 +1,6 @@
 package quindioexpress.modelo;
 
-import java.util.Objects;
+import java.util.ArrayList;
 
 public class Repartidor {
 
@@ -8,14 +8,14 @@ public class Repartidor {
     private final String nombre;
     private final String zona;
     private boolean disponible;
+    private ArrayList<String> paquetes;
 
-
-    // Mejorar constructor de acuerdo al documento
     public Repartidor(String id, String nombre, String zona) {
         this.id = id;
         this.nombre = nombre;
         this.zona = zona;
         this.disponible = true;
+        this.paquetes = new ArrayList<>();
     }
 
     public String getId() {
@@ -34,25 +34,16 @@ public class Repartidor {
         return disponible;
     }
 
-    // METODOS
-
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
 
-    // Dos repartidores son iguales si tienen la misma identificación.
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Repartidor)) return false;
-        Repartidor otro = (Repartidor) o;
-        return id.equals(otro.id);
+    public ArrayList<String> getPaquetes() {
+        return this.paquetes;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void addPaquete(String codigoPaquete) {
+       this.paquetes.add(codigoPaquete);
     }
 
     @Override
