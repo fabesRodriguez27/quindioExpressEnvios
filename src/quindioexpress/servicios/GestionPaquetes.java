@@ -34,7 +34,12 @@ public class GestionPaquetes {
         paquetesRegistrados.add(paquete);
         paquetesPorCodigo.put(codigo, paquete);
         prioridades.offer(paquete);
+        System.out.println("Registrado: " + codigo);
         return true;
+    }
+
+    public void mostrarCantidadPaquetes() {
+        System.out.println("Paquetes registrados: " + paquetesRegistrados.size());
     }
 
     //Buscar Paquete
@@ -134,7 +139,6 @@ public class GestionPaquetes {
     // Consultar el paquete de mayor prioridad
     public Paquete obtenerPaquetePorPrioridad() {
         PriorityQueue<Paquete> copia = new PriorityQueue<>(prioridades);
-
         while (!copia.isEmpty()) {
             Paquete paquete = copia.poll();
             if (paquete.idRepartidor() == null) {
@@ -145,26 +149,33 @@ public class GestionPaquetes {
     }
 
     // ---------- REPORTES ----------
-    //Municipios que Tienen Paquetes Registrados y Ordenado Alfabéticamente
-    public Set<String> obtenerMunicipiosSinDuplicadosOrdenados(){
-        TreeSet<String> municipios = new TreeSet<>();
-        for (Paquete paquete : paquetesRegistrados) {
-            municipios.add(paquete.getDestino());
-        }
-        return municipios;
-    }
 
     //Municipios que Tienen Paquetes Registrados y sin orden alfabético
-    public Set<String> obtenerMunicipiosSinDuplicados(){
+    public void obtenerMunicipiosSinDuplicados(){
         HashSet<String> municipios = new HashSet<>();
         for (Paquete paquete : paquetesRegistrados) {
             municipios.add(paquete.getDestino());
         }
-        return municipios;
+        imprimirColeccion(municipios);
+    }
+
+    //Municipios que Tienen Paquetes Registrados y Ordenado Alfabéticamente
+    public void obtenerMunicipiosSinDuplicadosOrdenados(){
+        TreeSet<String> municipios = new TreeSet<>();
+        for (Paquete paquete : paquetesRegistrados) {
+            municipios.add(paquete.getDestino());
+        }
+        imprimirColeccion(municipios);
+    }
+
+    public void imprimirColeccion(Collection<String> coleccion) {
+        for (String elemento : coleccion) {
+            System.out.println(elemento);
+        }
     }
 
     //Paquetes por Municipio
-    public HashMap<String, ArrayList<String>> obtenerPaquetePorDestino(){
+    public void obtenerPaquetePorDestino(){
         HashMap<String, ArrayList<String>> destinosConCodigo = new HashMap<>();
         for (Paquete paquete : paquetesRegistrados) {
             String municipio = paquete.getDestino();
@@ -177,23 +188,33 @@ public class GestionPaquetes {
                 destinosConCodigo.put(municipio, codigos);
             }
         }
-        return destinosConCodigo;
+        imprimirPaquetesPorDestino(destinosConCodigo);
+    }
+
+    public void imprimirPaquetesPorDestino(HashMap<String, ArrayList<String>> destinosConCodigo) {
+        for(Map.Entry<String, ArrayList<String>> entry : destinosConCodigo.entrySet()){
+            System.out.println("Municipio: " + entry.getKey());
+            for(String codigo : entry.getValue()){
+                System.out.println("  Código: " + codigo);
+            }
+        }
     }
 
     //Peso total de un determinado municipio
-    public double pesoTotalMunicipio(String municipio){
+    public double obtenerPesoTotalMunicipio(String municipio){
         return AlgoritmosRecursivos.pesoTotalPorMunicipio(paquetesRegistrados, municipio);
     }
 
+    //Cantidad de paquetes con minima prioridad
+    public int contarPrioridadMinima(int prioridadMinima){
+        return AlgoritmosRecursivos.contarPrioridadMinima(paquetesRegistrados, prioridadMinima);
+    }
+
     //Paquete de mayor peso
-    public Paquete paqueteConMayorPeso(){
+    public Paquete obtenerPaqueteConMayorPeso(){
         return DivideYVenceras.paqueteMayorPeso(paquetesRegistrados);
     }
 
-    //cantidad de paquetes con minima prioridad
-    public int contarPrioridadMin(int prioridadMinima){
-        return AlgoritmosRecursivos.contarPrioridadMinima(paquetesRegistrados, prioridadMinima);
-    }
 
     //Localizar paquete por Búsqueda Binaria
     public Paquete buscaPaquetePorBinaria(String codigo){

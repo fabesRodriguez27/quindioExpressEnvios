@@ -9,13 +9,13 @@ public class AlgoritmosRecursivos {
     // Peso total de paquetes de un determinado municipio
     public static double pesoTotalPorMunicipio(List<Paquete> lista, String municipio){
         if(!lista.isEmpty()){
-            return pesoTotal(lista, municipio, 0);
+            return pesoTotalPorMunicipio(lista, municipio, 0);
         }
         return 0;
     }
 
     //Método auxiliar
-    public static double pesoTotal(List<Paquete> lista, String municipio, int i){
+    public static double pesoTotalPorMunicipio(List<Paquete> lista, String municipio, int i){
         if(i==lista.size()){    // caso base
             return 0;
         }
@@ -24,25 +24,25 @@ public class AlgoritmosRecursivos {
         if(paquete.getDestino().equalsIgnoreCase(municipio)){
             pesoTotal = paquete.getPeso();
         }
-        return pesoTotal + pesoTotal(lista,municipio, i+1);
+        return pesoTotal + pesoTotalPorMunicipio(lista,municipio, i+1);
     }
 
     //Paquetes con prioridad igual o superior a un valor
     public static int contarPrioridadMinima(List<Paquete> lista, int prioridadMin){
         if(!lista.isEmpty()){
-            return contarPrioridad(lista, prioridadMin, 0);
+            return contarPrioridadMinima(lista, prioridadMin, 0);
         }
         return 0;
     }
 
     //Método auxiliar
-    public static int contarPrioridad(List<Paquete> lista,int prioridadMin ,int i){
+    public static int contarPrioridadMinima(List<Paquete> lista,int prioridadMin ,int i){
         if(i ==lista.size()){
             return 0;
         }
         if(lista.get(i).getPrioridad() >= prioridadMin){
-            return 1 + contarPrioridad(lista, prioridadMin, i+1);
+            return 1 + contarPrioridadMinima(lista, prioridadMin, i+1);
         }
-        return contarPrioridad(lista,prioridadMin,i+1);
+        return contarPrioridadMinima(lista,prioridadMin,i+1);
     }
 }

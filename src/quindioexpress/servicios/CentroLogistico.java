@@ -22,6 +22,10 @@ public class CentroLogistico {
         return gestionPaquetes.registrarPaquete(paquete);
     }
 
+    public void totalPaquetesRegistrados(){
+        gestionPaquetes.mostrarCantidadPaquetes();
+    }
+
     public boolean eliminarPaquete(String codigo) {
         return gestionPaquetes.eliminarPaquete(codigo);
     }
@@ -146,7 +150,41 @@ public class CentroLogistico {
 
 
     //REPORTES
+    public void mostrarMunicipiosConPaquete() {
+        gestionPaquetes.obtenerMunicipiosSinDuplicados();
+    }
+
+    public void mostrarMunicipiosConPaqueteOrden() {
+        gestionPaquetes.obtenerMunicipiosSinDuplicadosOrdenados();
+    }
+
+    public void obtenerPaquetesPorDestino() {
+        gestionPaquetes.obtenerPaquetePorDestino();
+    }
+
+    public double obtenerPesoPorMunicipio(String municipio) {
+        return gestionPaquetes.obtenerPesoTotalMunicipio(municipio);
+    }
+
+    public int contarPrioridadMinima(int prioridadMinima) {
+        return gestionPaquetes.contarPrioridadMinima(prioridadMinima);
+    }
+
+    public Paquete obtenerPaqueteConMayorPeso() {
+        return gestionPaquetes.obtenerPaqueteConMayorPeso();
+    }
+
+
+
+
+
+
+
 
 }
+
+
+
+
 
 

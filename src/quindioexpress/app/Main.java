@@ -12,6 +12,7 @@ public class Main {
         DatosPrueba.probarBusqueda(quindioExpress, 500000);
          */
         DatosIniciales.cargar(quindioExpress);
+        quindioExpress.totalPaquetesRegistrados();
         menuGestionarQuindioExpress();
     }
 
@@ -209,19 +210,19 @@ public class Main {
     public static void validarMenuProcesarPaquetes(int opcion) {
         switch (opcion) {
             case 1:
-                String mensaje1 = quindioExpress.procesarPaquetePorPrioridad();
+                String mensaje1 = quindioExpress.procesarPaqueteOrdenRegistro();
                 if (mensaje1 != null) {
-                    mostrarMensaje("Se proceso el paquete: \n"+mensaje1);
-                }else {
-                    mostrarMensaje("No se encontró ningun paquete en la posición especificada");
+                    mostrarMensaje("Se procesó el paquete: \n" + mensaje1);
+                } else {
+                    mostrarMensaje("No se encontró ningún paquete en la posición especificada");
                 }
                 break;
             case 2:
                 String mensaje2 = quindioExpress.procesarPaquetePorPrioridad();
                 if (mensaje2 != null) {
-                    mostrarMensaje("Se proceso el paquete: \n"+mensaje2);
-                }else {
-                    mostrarMensaje("No se encontró ningun paquete en la posición especificada");
+                    mostrarMensaje("Se proceso el paquete: \n" + mensaje2);
+                } else {
+                    mostrarMensaje("No se encontró ningún paquete en la posición especificada");
                 }
                 break;
             case 3:
@@ -231,7 +232,6 @@ public class Main {
                 break;
         }
     }
-
 
     /*
     ==================================
@@ -292,7 +292,6 @@ public class Main {
         }
     }
 
-
     /*
     ==================================
     MENU HISTORIAL DE ENTREGAS
@@ -336,11 +335,10 @@ public class Main {
                 String mensaje = quindioExpress.obtenerEntrega(
                         Integer.parseInt(capturarDato("Ingrese la posición de la entrega que desea obtener: ")));
                 if (mensaje == null) {
-                    mostrarMensaje("No se encontró ningun paquete en la posición especificada");
+                    mostrarMensaje("No se encontró ningún paquete en la posición especificada");
                 }else {
                     mostrarMensaje(mensaje);
                 }
-
                 break;
 
             case 4:
@@ -362,11 +360,9 @@ public class Main {
         }
     }
 
-
-
      /*
     ==================================
-    MENU REPORTES QUINDIO EXPRESS
+    MENU REPORTES QUINDÍO EXPRESS
     ==================================
      */
 
@@ -376,40 +372,52 @@ public class Main {
         do {
             String mensaje = "====== INGRESE LA OPCIÓN CORRESPONDIENTE ======\n"
                     + "(1) Municipios con al menos un paquete\n"
-                    + "(2) Paquetes por municipio\n"
-                    + "(3) Peso de paquetes pendientes por zona\n"
-                    + "(4) Numero de paquetes mayor a prioridad indicada\n"
-                    + "(5) Paquete con mayor peso\n"
-                    + "(6) Regresar a menu principal \n";
+                    + "(2) Municipios con al menos un paquete ordenados alfabéticamente\n"
+                    + "(3) Paquetes por municipio\n"
+                    + "(4) Peso de paquetes pendientes por zona\n"
+                    + "(5) Numero de paquetes mayor a prioridad indicada\n"
+                    + "(6) Paquete con mayor peso\n"
+                    + "(7) Regresar a menu principal \n";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             validarMenuReportes(opcion);
-        } while (opcion != 6);
+        } while (opcion != 7);
     }
 
     public static void validarMenuReportes(int opcion) {
         switch (opcion) {
             case 1:
                 //(1) Municipios con al menos un paquete
-                //mostrarMensaje(quindioExpress.municipiosConPaquetes());
+                System.out.println("\n===== Municipios con Al Menos Un Paquete =====");
+                quindioExpress.mostrarMunicipiosConPaquete();
                 break;
             case 2:
-                //(2) Paquetes por municipio
-                //mostrarMensaje(quindioExpress.paquetesPorMunicipio());
+                //(2) Municipios con al menos un paquete orden alfabético
+                System.out.println("\n===== Municipios con Al Menos Un Paquete Ordenados Alfabéticamente =====");
+                quindioExpress.mostrarMunicipiosConPaqueteOrden();
                 break;
             case 3:
-                //(3) Peso de paquetes pendientes por zona
-                //mostrarMensaje(quindioExpress.pesoPaquetesPorZona());
+                //(2) Paquetes por municipio
+                System.out.println("\n===== Paquetes Por Destino =====");
+                quindioExpress.obtenerPaquetesPorDestino();
                 break;
             case 4:
-                //(4) Numero de paquetes mayor a prioridad indicada
-                //mostrarMensaje(quindioExpress.paquetesMayorAPrioridad(
-                //        Integer.parseInt(capturarDato("Ingrese la prioridad que desea verificar: "));
+                //(3) Peso de paquetes pendientes por zona
+                String municipio = JOptionPane.showInputDialog("Ingrese el Municipio al que le Desea Obtener el Peso Total de Paquetes: ");
+                double peso = quindioExpress.obtenerPesoPorMunicipio(municipio);
+                mostrarMensaje("El Peso total de " + municipio + " es: " + peso);
                 break;
             case 5:
-                //(5) Paquete con mayor peso
-                //mostrarMensaje(quindioExpress.paquetePesoMayor());
+                //(4) Número de paquetes mayor a prioridad indicada
+                int prioridad = Integer.parseInt(capturarDato("Ingrese la prioridad que desea verificar: "));
+                int conteoPrioridad = quindioExpress.contarPrioridadMinima(prioridad);
+                mostrarMensaje("El Número de Paquetes con Prioridad Mayor o Igual a " + prioridad + " es: " + conteoPrioridad);
                 break;
             case 6:
+                //(5) Paquete con mayor peso
+                Paquete paquete = quindioExpress.obtenerPaqueteConMayorPeso();
+                mostrarMensaje("El Paquete con Mayor Peso es: " + "\n" + paquete.toString());
+                break;
+            case 7:
                 break;
             default:
                 System.out.println("Opción no válida. Intente Nuevamente");
