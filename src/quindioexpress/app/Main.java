@@ -108,15 +108,29 @@ public class Main {
     }
 
     public static void agregarPaquete() {
-        String destino = JOptionPane.showInputDialog("Ingrese el Destino del Paquete: ");
-        double peso = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el Peso del Paquete: "));
-        int prioridad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Prioridad del Paquete: "));
-        int tiempoEstimado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Tiempo Estimado del Paquete: "));
-        Paquete paquete = new Paquete(destino, peso, prioridad, tiempoEstimado);
-        if (quindioExpress.agregarPaquete(paquete)) {
-            JOptionPane.showMessageDialog(null, "Paquete Registrado con Éxito");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se Pudo Registrar el Paquete");
+        try {
+            String destino = JOptionPane.showInputDialog("Ingrese el Destino del Paquete:");
+
+            // Si el usuario cancela, no se registra el paquete.
+            if (destino == null) {
+                return;
+            }
+            double peso = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el Peso del Paquete:"));
+            int prioridad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la Prioridad del Paquete:"));
+            int tiempoEstimado = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Tiempo Estimado del Paquete:"));
+
+            Paquete paquete = new Paquete(destino, peso, prioridad, tiempoEstimado
+            );
+
+            if (quindioExpress.agregarPaquete(paquete)) {
+                JOptionPane.showMessageDialog(null, "Paquete registrado con éxito");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo registrar el paquete. " + "Verifique que el destino esté registrado.");
+            }
+
+        } catch (NumberFormatException e) {JOptionPane.showMessageDialog(null, "Debe ingresar un número válido.", "Dato incorrecto", JOptionPane.WARNING_MESSAGE);
+
+        } catch (IllegalArgumentException e) {JOptionPane.showMessageDialog(null, "Error al registrar el paquete: " + e.getMessage(), "Dato Incorrecto", JOptionPane.WARNING_MESSAGE);
         }
     }
 

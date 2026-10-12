@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Paquete implements Comparable<Paquete> {
 
-    public static final int PRIORIDAD_MIN = 0;
-    public static final int PRIORIDAD_MAX = 10;
+    public static final int PRIORIDAD_MIN = 1;
+    public static final int PRIORIDAD_MAX = 5;
     public static final int PRIORIDAD_DEFECTO = 5;
 
     private final String codigo;
@@ -23,8 +23,8 @@ public class Paquete implements Comparable<Paquete> {
         if (peso <= 0) {
             throw new IllegalArgumentException("El peso debe ser positivo");
         }
-        if (prioridad < 1 || prioridad > 10) {
-            throw new IllegalArgumentException("La prioridad debe estar entre 1 y 10");
+        if (prioridad < 1 || prioridad > 5) {
+            throw new IllegalArgumentException("La prioridad debe estar entre 1 y 5");
         }
         if (tiempoEstimado <= 0) {
             throw new IllegalArgumentException("El tiempo debe ser positivo");
