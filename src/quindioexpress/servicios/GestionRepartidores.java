@@ -35,7 +35,7 @@ public class GestionRepartidores {
             return false;
         }
 
-        if (repartidor.getPaquetes().isEmpty()){
+        if (!repartidor.getPaquetes().isEmpty()){
             return  false;
         }
 
@@ -51,6 +51,21 @@ public class GestionRepartidores {
             mensaje += repartidor.toString()+"\n";
         }
 
+        return mensaje;
+    }
+
+    public String mostrarRepartidoresConPaquetes (){
+
+        String mensaje = "REPARTIDORES CON PAQUETES ASIGNADOS: \n";
+
+        for(Repartidor repartidor : repartidores.values()) {
+            if (!repartidor.getPaquetes().isEmpty()) {
+                mensaje += repartidor.getNombre() + "\n";
+                for (String paquete : repartidor.getPaquetes()) {
+                    mensaje += "Paquete: " + paquete + "\n";
+                }
+            }
+        }
         return mensaje;
     }
 
@@ -100,6 +115,21 @@ public class GestionRepartidores {
         Random random = new Random();
         int numero = random.nextInt(1000);
         return String.format("R%03d", numero);
+    }
+
+    public boolean verificarEntrega(String id, String codigo) {
+
+        Repartidor repartidor = repartidores.get(id);
+
+        if (repartidor == null) {
+            return false;
+        }
+
+        if (repartidor.isDisponible()) {
+            return false;
+        }
+
+        return repartidor.getPaquetes().contains(codigo);
     }
 
 }

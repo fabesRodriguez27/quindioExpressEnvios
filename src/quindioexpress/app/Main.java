@@ -16,7 +16,7 @@ public class Main {
         menuGestionarQuindioExpress();
     }
 
-    /*
+    /**
     ==================================
     MENU PRINCIPAL
     ==================================
@@ -61,7 +61,7 @@ public class Main {
         }
     }
 
-    /*
+    /**
     ==================================
     MENU GESTIONAR PAQUETES
     ==================================
@@ -146,8 +146,10 @@ public class Main {
     public static void buscarPaquetePorCodigo() {
         String codigo = JOptionPane.showInputDialog("Ingrese el Código del Paquete a Buscar: ");
         Paquete paquete = quindioExpress.buscarPaquete(codigo);
-        if (paquete != null) {
+        Paquete paquete1 = quindioExpress.buscarPaqueteBinaria(codigo);
+        if (paquete != null && paquete1 != null) {
             System.out.println("El Paquete es: " + paquete.toString());
+            System.out.println("El Paquete por busqueda binaria es: " + paquete1.toString());
         } else {
             System.out.println("No se Pudo Encontrar el Paquete");
         }
@@ -161,10 +163,11 @@ public class Main {
                     + "2. Mostrar Paquetes Por Prioridad de Mayor a Menor\n"
                     + "3. Mostrar Paquetes Por Peso de Mayor a Menor\n"
                     + "4. Mostrar Paquetes Por Tiempo Estimado de Menor a Mayor\n"
-                    + "5. Regresar";
+                    + "5. Mostrar Paquetes Por Orden de Llegada\n"
+                    + "6. Regresar";
             opcion = Integer.parseInt(JOptionPane.showInputDialog(mensaje));
             validarMenuMostrarPaquetes(opcion);
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 
     public static void validarMenuMostrarPaquetes(int opcion) {
@@ -182,6 +185,9 @@ public class Main {
                 mostrarPaquetesPorTiempoEstimado();
                 break;
             case 5:
+                mostrarPaquetesPorOrdenLlegada();
+                break;
+            case 6:
                 break;
             default:
                 System.out.println("Opción no válida. Intente Nuevamente");
@@ -207,6 +213,11 @@ public class Main {
     public static void mostrarPaquetesPorTiempoEstimado() {
         System.out.println("===== Paquetes Ordenados de Menor a Mayor Tiempo Estimado ====\n");
         quindioExpress.mostrarPaquetesPorTiempoEstimado();
+    }
+
+    public static void mostrarPaquetesPorOrdenLlegada() {
+        System.out.println("===== Paquetes Ordenados por Orden de Llegada ====\n");
+        quindioExpress.mostrarPaquetesPorOrdenLlegada();
     }
 
     public static void menuProcesarPaquetes() {
@@ -247,7 +258,7 @@ public class Main {
         }
     }
 
-    /*
+    /**
     ==================================
     MENU GESTIONAR REPARTIDORES
     ==================================
@@ -258,13 +269,14 @@ public class Main {
                 + "(1) Agregar Repartidor:\n"
                 + "(2) Eliminar Repartidor:\n"
                 + "(3) Mostrar Repartidores:\n"
-                + "(4) Enviar a RUTA repartidor: \n"
-                + "(5) Volver al Menú Principal:\n";
+                + "(4) Mostrar Repartidores con Paquetes Asignados:\n"
+                + "(5) Enviar a RUTA repartidor: \n"
+                + "(6) Volver al Menú Principal:\n";
         int opcion;
         do {
             opcion = Integer.parseInt(JOptionPane.showInputDialog(menu));
             validarMenuGestionarRepartidores(opcion);
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 
     public static void validarMenuGestionarRepartidores(int opcion) {
@@ -291,13 +303,18 @@ public class Main {
                 break;
 
             case 4:
+                //(4) Mostrar Repartidores con Paquetes Asignados
+                mostrarMensaje(quindioExpress.mostrarRepartidoresConPaquetes());
+                break;
+
+            case 5:
                 //(4) Mandar a ruta repartidor
                 boolean canEnviar = quindioExpress.enviarRuta(
                         capturarDato("Ingrese el código del repartidor que sale a ruta"));
                 mostrarMensaje(canEnviar ? "Se envió a ruta" : "El repartidor no tiene paquetes asignados");
                 break;
 
-            case 5:
+            case 6:
                 break;
 
             default:
@@ -306,7 +323,7 @@ public class Main {
         }
     }
 
-    /*
+    /**
     ==================================
     MENU HISTORIAL DE ENTREGAS
     ==================================
@@ -374,7 +391,7 @@ public class Main {
         }
     }
 
-     /*
+     /**
     ==================================
     MENU REPORTES QUINDÍO EXPRESS
     ==================================

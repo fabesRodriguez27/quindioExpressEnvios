@@ -62,7 +62,6 @@ public class GestionPaquetes {
     public void ordenarPaquetesAlfabeticamente(){
         ArrayList<Paquete> copia = new ArrayList<>(paquetesRegistrados);
         Collections.sort(copia);
-        imprimirLista(copia);
     }
 
     public void imprimirLista(ArrayList<Paquete> lista){

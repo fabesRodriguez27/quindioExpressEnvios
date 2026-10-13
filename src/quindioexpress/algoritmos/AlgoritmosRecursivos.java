@@ -14,7 +14,6 @@ public class AlgoritmosRecursivos {
         return 0;
     }
 
-    //Método auxiliar
     public static double pesoTotalPorMunicipio(List<Paquete> lista, String municipio, int i){
         if(i==lista.size()){    // caso base
             return 0;
@@ -35,7 +34,6 @@ public class AlgoritmosRecursivos {
         return 0;
     }
 
-    //Método auxiliar
     public static int contarPrioridadMinima(List<Paquete> lista,int prioridadMin ,int i){
         if(i ==lista.size()){
             return 0;
