@@ -13,7 +13,11 @@ public class CentroLogistico {
         gestionEntregas = new GestionEntregas();
     }
 
-    //GESTION PAQUETES
+    /**
+    =================================================
+    GESTION PAQUETES
+    =================================================
+     */
 
     public boolean agregarPaquete(Paquete paquete) {
         if (!gestionRepartidores.validarMunicipio(paquete.getDestino())) {
@@ -27,12 +31,22 @@ public class CentroLogistico {
     }
 
     public boolean eliminarPaquete(String codigo) {
+        Paquete paquete = gestionPaquetes.buscarPaquete(codigo);
+        if (paquete != null) return false;
+        if (paquete.idRepartidor() != null) {
+            gestionRepartidores.eliminarPaqueteRepartidor(codigo, paquete.idRepartidor());
+        }
         return gestionPaquetes.eliminarPaquete(codigo);
     }
 
     public Paquete buscarPaquete(String codigo) {
         return gestionPaquetes.buscarPaquete(codigo);
     }
+
+    public Paquete buscarPaqueteBinaria(String codigo) {
+        return gestionPaquetes.buscaPaquetePorBinaria(codigo);
+    }
+
 
     public void ordenarPaquetesAlfabeticamente() {
         gestionPaquetes.ordenarPaquetesAlfabeticamente();
@@ -50,12 +64,19 @@ public class CentroLogistico {
         gestionPaquetes.mostrarPaquetesOrdenTiempoEstimado();
     }
 
+    public void mostrarPaquetesPorOrdenLlegada() {
+        gestionPaquetes.mostrarPaquetesRegistradosOrden();
+    }
+
     public Paquete buscarPaqueteArrayList(String codigo) {
         return gestionPaquetes.buscarPaqueteArrayList(codigo);
     }
 
-
-    //PROCESAR PAQUETES
+    /**
+    =================================================
+    PROCESAR PAQUETES
+    =================================================
+     */
 
     //Procesar según el orden de registro (Arraylist<>)
     public String procesarPaqueteOrdenRegistro() {
@@ -94,7 +115,11 @@ public class CentroLogistico {
     }
 
 
-    //GESTION DE REPARTIDORES
+    /**
+    =================================================
+    GESTION REPARTIDORES
+    =================================================
+     */
 
     public boolean crearRepartidor(String nombre, String zona) {
         return gestionRepartidores.crearRepartidor(nombre, zona);
@@ -108,12 +133,20 @@ public class CentroLogistico {
         return gestionRepartidores.mostrarRepartidores();
     }
 
+    public String mostrarRepartidoresConPaquetes() {
+        return gestionRepartidores.mostrarRepartidoresConPaquetes();
+    }
+
     public boolean enviarRuta(String codigo) {
         return gestionRepartidores.ocuparRepartidor(codigo);
     }
 
 
-    //GESTION DE ENTREGAS
+    /**
+    =================================================
+    GESTION ENTREGAS
+    =================================================
+     */
 
     public boolean agregarEntrega(String codigo) {
         Paquete paquete = gestionPaquetes.buscarPaquete(codigo);
@@ -124,11 +157,18 @@ public class CentroLogistico {
 
         String idRepartidor = paquete.idRepartidor();
 
-        if (idRepartidor == null) {
+        if (!gestionRepartidores.verificarEntrega(idRepartidor,codigo)) {
             return false;
         }
-        gestionPaquetes.eliminarPaquete(paquete.getCodigo());
-        gestionRepartidores.eliminarPaqueteRepartidor(codigo, paquete.idRepartidor());
+
+        if (!gestionRepartidores.eliminarPaqueteRepartidor(codigo, idRepartidor)) {
+            return false;
+        }
+
+        if (!gestionPaquetes.eliminarPaquete(codigo)) {
+            return false;
+        }
+
         return gestionEntregas.agregarEntrega(paquete);
     }
 
@@ -149,7 +189,12 @@ public class CentroLogistico {
     }
 
 
-    //REPORTES
+    /**
+    =================================================
+    REPORTES
+    =================================================
+     */
+
     public void mostrarMunicipiosConPaquete() {
         gestionPaquetes.obtenerMunicipiosSinDuplicados();
     }
@@ -173,14 +218,6 @@ public class CentroLogistico {
     public Paquete obtenerPaqueteConMayorPeso() {
         return gestionPaquetes.obtenerPaqueteConMayorPeso();
     }
-
-
-
-
-
-
-
-
 }
 
 

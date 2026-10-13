@@ -10,15 +10,15 @@ public class BusquedaBinaria {
 
     // Localizar el paquete con busqueda binaria
     public static Paquete buscarPaquete(List<Paquete> lista, String codigo){
-        if(!lista.isEmpty()){
-            Collections.sort(lista);
-            return buscar(lista, codigo, 0,  lista.size()-1);
+        if(lista.isEmpty()){
+            return null;
         }
-        return null;
+        ArrayList<Paquete> copia = new ArrayList<>(lista);
+        Collections.sort(copia);
+        return buscarPaquete(copia, codigo, 0,  copia.size()-1);
     }
 
-    //Método auxiliar
-    public static Paquete buscar(List<Paquete> lista, String codigo, int inicio, int fin) {
+    public static Paquete buscarPaquete(List<Paquete> lista, String codigo, int inicio, int fin) {
         if (inicio > fin) {
             return null;                                   // caso base: no existe
         }
@@ -30,8 +30,8 @@ public class BusquedaBinaria {
             return lista.get(medio);                       // caso base: encontrado
         }
         if (comparacion > 0) {
-            return buscar(lista, codigo, medio + 1, fin);  // va despues, sigo con la derecha
+            return buscarPaquete(lista, codigo, medio + 1, fin);  // va despues, sigo con la derecha
         }
-        return buscar(lista, codigo, inicio, medio - 1); // va antes, sigo con la izquierda
+        return buscarPaquete(lista, codigo, inicio, medio - 1); // va antes, sigo con la izquierda
     }
 }
